@@ -26,6 +26,24 @@ const resolvers = {
                 };
             }
         },
+        addTaskToUser: async (_,{ id, description, complete }, { dataSources }) => {
+            try {
+                const task = await dataSources.todoAPI.addTaskToUser(id, description, complete);
+                return {
+                  code: 201,
+                  success: true,
+                  message: `Successfully added task ${description} to user ${id}`,
+                  task,
+                };
+            } catch (err) {
+                return {
+                  code: err.extensions.response.status,
+                  success: false,
+                  message: err.extensions.response.body,
+                  task: null,
+                };
+            }
+        },
     },
     User: {
         tasks: ({user_id}, _, {dataSources}) => {

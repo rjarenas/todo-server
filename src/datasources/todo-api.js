@@ -18,6 +18,10 @@ class TodoAPI extends RESTDataSource {
     updateComplete(taskId, complete) {
         return this.patch(`tasks/${taskId}`, {"complete": complete});
     }
+
+    addTaskToUser(userId, description, complete) {
+        return this.post(`/user/${userId}/tasks`, { "description": description, "complete": complete });
+    }
 };
 
 module.exports = TodoAPI;
